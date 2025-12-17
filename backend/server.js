@@ -10,6 +10,7 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import paypal from "@paypal/checkout-server-sdk";
 
 // ======================
 // Stripe
@@ -22,6 +23,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // ======================
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// PayPal environment
+const environment = new paypal.core.SandboxEnvironment(
+  process.env.PAYPAL_CLIENT_ID,
+  process.env.PAYPAL_CLIENT_SECRET
+);
+
+// Create PayPal HTTP client
+const client = new paypal.core.PayPalHttpClient(environment);
 
 // ======================
 // Middlewares
@@ -55,9 +65,9 @@ app.post("/api/stripe/create-payment-intent", async (req, res) => {
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100,//stripe expects cents, not dollars
+      amount: amount * 100, //stripe expects cents, not dollars
       currency,
-      automatic_payment_methods: { enabled: true },//stripe handle card types automatically(visa,mastercard)
+      automatic_payment_methods: { enabled: true }, //stripe handle card types automatically(visa,mastercard)
     });
 
     res.json({ clientSecret: paymentIntent.client_secret });
@@ -66,7 +76,6 @@ app.post("/api/stripe/create-payment-intent", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 // app.post("/api/orders",async (req,res) => {
 //   const{paymentIntent} = req.body;
@@ -87,41 +96,55 @@ app.post("/api/stripe/create-payment-intent", async (req, res) => {
 
 //   res.json({ success: true });
 // });
-  
+
 // })
 
 // ======================
 // SIMULATED PAYPAL (sandbox only)
 // ======================
-app.post("/api/paypal/create-order", (req, res) => {
+app.post("/api/paypal/create-order", async (req, res) => {
   const { amount, currency = "USD" } = req.body;
 
-  // Simulate a PayPal order ID
-  const fakeOrderID = `PAYPAL-SANDBOX-${Math.floor(Math.random() * 1000000)}`;
+  const request = new paypal.orders.OrdersCreateRequest();
+  request.prefer("return=representation");
+  request.requestBody({
+    intent: "CAPTURE",
+    purchase_units: [
+      { amount: { currency_code: currency, value: amount.toString() } },
+    ],
+  });
 
-  console.log(`Simulated PayPal order created: ${fakeOrderID} (${currency} ${amount})`);
-
-  res.json({ id: fakeOrderID });
+  try {
+    const order = await client.execute(request); // Call PayPal API
+    res.json({ id: order.result.id }); // Send order ID to frontend
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "PayPal order creation failed" });
+  }
 });
 
+// ======================
+// Capture PayPal Order
+// ======================
 app.post("/api/paypal/capture-order", async (req, res) => {
   const { orderID } = req.body;
+  if (!orderID) return res.status(400).json({ error: "orderID is required" });
 
-  if (!orderID) {
-    return res.status(400).json({ error: "Order ID is required" });
-  }
-
-  // Simulate capture always succeeding
-  console.log(`Simulated PayPal capture for order ${orderID}: SUCCESS`);
+  // Fake capture for sandbox testing
   res.json({
-    capture: {
-      id: `CAPTURE-${orderID}`,
-      status: "COMPLETED",
-      amount: { currency_code: "USD", value: "1.00" },
-    },
+    id: orderID,
+    status: "COMPLETED",
+    amount: "1.00",
+    currency: "USD",
   });
 });
 
+
+
+
+// ======================
+// mpesa intergration
+// ======================
 
 // ======================
 // Start server

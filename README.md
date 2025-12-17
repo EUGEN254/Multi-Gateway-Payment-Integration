@@ -98,7 +98,7 @@ Testing Payments
 
 ⚠️ All PayPal captures are simulated in the backend; no real transactions occur.
 
-Folder Structure
+    Folder Structure
     multi-gateway-payments
     ├── backend
     │   ├── package.json
@@ -114,6 +114,7 @@ Folder Structure
     │   ├── src
     │   └── vite.config.js
     └── README.md
+
 
 
 This README is sandbox/test-focused.

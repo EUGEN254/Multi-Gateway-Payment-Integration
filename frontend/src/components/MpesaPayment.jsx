@@ -47,7 +47,7 @@ const MpesaPayment = ({ product, onSuccess, onFailure, onBack, onClose }) => {
       </div>
 
       {/* Product Info */}
-      <div className="p-6 bg-gradient-to-r from-teal-50 to-emerald-50">
+      <div className="p-6 bg-linear-to-r from-teal-50 to-emerald-50">
         <div className="flex justify-between items-center">
           <span className="font-semibold">{product.name}</span>
           <span className="text-xl font-bold">KSh {product.price * 100}</span>
@@ -92,7 +92,7 @@ const MpesaPayment = ({ product, onSuccess, onFailure, onBack, onClose }) => {
         {/* Test Info */}
         <div className="mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
           <div className="flex items-start">
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <Smartphone className="w-5 h-5 text-yellow-600" />
             </div>
             <div className="ml-3">
@@ -108,7 +108,7 @@ const MpesaPayment = ({ product, onSuccess, onFailure, onBack, onClose }) => {
           <button
             type="submit"
             disabled={isProcessing}
-            className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white py-3 rounded-lg font-semibold hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 flex items-center justify-center"
+            className="w-full bg-linear-to-r from-teal-600 to-emerald-600 text-white py-3 rounded-lg font-semibold hover:from-teal-700 hover:to-emerald-700 disabled:opacity-50 flex items-center justify-center"
           >
             {isProcessing ? (
               <>

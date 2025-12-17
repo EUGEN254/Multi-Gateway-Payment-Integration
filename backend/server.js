@@ -48,16 +48,16 @@ app.get("/", (req, res) => {
 // ======================
 app.post("/api/stripe/create-payment-intent", async (req, res) => {
   try {
-    const { amount, currency = "usd" } = req.body;
+    const { amount, currency = "usd" } = req.body; // currency must be usd
 
     if (!amount) {
       return res.status(400).json({ error: "Amount is required" });
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100,
+      amount: amount * 100,//stripe expects cents, not dollars
       currency,
-      automatic_payment_methods: { enabled: true },
+      automatic_payment_methods: { enabled: true },//stripe handle card types automatically(visa,mastercard)
     });
 
     res.json({ clientSecret: paymentIntent.client_secret });
@@ -66,6 +66,29 @@ app.post("/api/stripe/create-payment-intent", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+// app.post("/api/orders",async (req,res) => {
+//   const{paymentIntent} = req.body;
+
+//   app.post("/api/orders", async (req, res) => {
+//   const { paymentIntent } = req.body;
+
+//   const { id, amount, currency, status, payment_method, created } = paymentIntent;
+
+//   await Order.create({
+//     paymentId: id,
+//     amount: amount / 100,
+//     currency,
+//     status,
+//     paymentMethodId: payment_method,
+//     createdAt: new Date(created * 1000)
+//   });
+
+//   res.json({ success: true });
+// });
+  
+// })
 
 // ======================
 // SIMULATED PAYPAL (sandbox only)

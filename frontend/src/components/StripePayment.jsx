@@ -17,6 +17,7 @@ const StripePayment = ({ product, onSuccess, onFailure, onBack, onClose }) => {
 
     try {
       // Create PaymentIntent on backend
+      // this tells strype i want to charge x amount for these product
       const res = await axios.post(
         backendUrl + "/api/stripe/create-payment-intent",
         { amount: product.price, name: product.name },
@@ -24,23 +25,41 @@ const StripePayment = ({ product, onSuccess, onFailure, onBack, onClose }) => {
       );
 
       const { clientSecret } = res.data;
-      if (!clientSecret) throw new Error("No client secret returned from backend");
+      if (!clientSecret)
+        throw new Error("No client secret returned from backend");
 
       // Confirm card payment using Stripe Elements
       const cardElement = elements.getElement(CardElement);
-      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: { name: "Test User" }
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: cardElement,
+            billing_details: { name: "Test User" }, //optional it can be user info can be from the user
+          },
         }
-      });
+      );
 
       if (error) {
-        console.error(error);
+        console.error("Stripe error:", error);
         onFailure(error.message);
-      } else {
-        onSuccess("Stripe Payment Successful!");
+        return; // stop further execution
+      }else{
+        onSuccess("Stripe payment succesfully")
       }
+
+      console.log("Stripe PaymentIntent:", paymentIntent);
+      //Save payment info to backend
+      // const response = await axios.post(backendUrl + "/api/orders", {
+      //   paymentIntent,
+      // });
+
+      // if (response.data.success) {
+      //   onSuccess("Stripe Payment Successful!");
+      // } else {
+      //   onFailure("Failed to save payment on backend");
+      // }
+
     } catch (err) {
       console.error(err);
       onFailure("Stripe");
@@ -54,11 +73,19 @@ const StripePayment = ({ product, onSuccess, onFailure, onBack, onClose }) => {
       {/* Header */}
       <div className="p-6 border-b">
         <div className="flex items-center justify-between">
-          <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full">
+          <button
+            onClick={onBack}
+            className="p-2 hover:bg-gray-100 rounded-full"
+          >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <h2 className="text-xl font-bold">Stripe Test Payment</h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full">✕</button>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-gray-100 rounded-full"
+          >
+            ✕
+          </button>
         </div>
       </div>
 
@@ -72,18 +99,20 @@ const StripePayment = ({ product, onSuccess, onFailure, onBack, onClose }) => {
       <form onSubmit={handleSubmit} className="p-6 space-y-4">
         {/* Stripe Card Element */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Card Details</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Card Details
+          </label>
           <div className="p-3 border border-gray-300 rounded-lg">
             <CardElement
               options={{
                 style: {
                   base: {
-                    fontSize: '16px',
-                    color: '#424770',
-                    '::placeholder': { color: '#aab7c4' },
+                    fontSize: "16px",
+                    color: "#424770",
+                    "::placeholder": { color: "#aab7c4" },
                   },
-                  invalid: { color: '#9e2146' },
-                }
+                  invalid: { color: "#9e2146" },
+                },
               }}
             />
           </div>
@@ -92,7 +121,8 @@ const StripePayment = ({ product, onSuccess, onFailure, onBack, onClose }) => {
         {/* Info for testing */}
         <div className="flex items-center text-sm text-gray-600">
           <Lock className="w-4 h-4 mr-2 text-green-600" />
-          Stripe TEST mode — use card 4242 4242 4242 4242 with any future date & CVC
+          Stripe TEST mode — use card 4242 4242 4242 4242 with any future date &
+          CVC
         </div>
 
         {/* Submit Button */}

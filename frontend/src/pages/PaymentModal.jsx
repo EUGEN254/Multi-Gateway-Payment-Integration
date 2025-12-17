@@ -182,7 +182,7 @@ const PaymentModal = ({ product, onSuccess, onFailure, onClose }) => {
         </div>
 
         {/* Product Summary */}
-        <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div className="p-6 border-b border-gray-100 bg-linear-to-r from-blue-50 to-indigo-50">
           <div className="flex justify-between items-center mb-2">
             <span className="text-lg font-semibold text-gray-900">{product.name}</span>
             <span className="text-2xl font-bold text-gray-900">${product.price}</span>
@@ -208,7 +208,7 @@ const PaymentModal = ({ product, onSuccess, onFailure, onClose }) => {
                 disabled={isProcessing}
                 className={`w-full p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between hover:scale-[1.02] hover:shadow-lg ${
                   selectedGateway?.name === gateway.name
-                    ? `border-blue-500 bg-gradient-to-r ${gateway.color} bg-opacity-10`
+                    ? `border-blue-500 bg-linear-to-r ${gateway.color} bg-opacity-10`
                     : "border-gray-200 hover:border-gray-300"
                 } ${isProcessing ? "opacity-50 cursor-not-allowed" : ""}`}
               >
@@ -226,7 +226,7 @@ const PaymentModal = ({ product, onSuccess, onFailure, onClose }) => {
                   </div>
                 </div>
                 {selectedGateway?.name === gateway.name && (
-                  <div className={`p-2 rounded-full bg-gradient-to-r ${gateway.color}`}>
+                  <div className={`p-2 rounded-full bg-linear-to-r ${gateway.color}`}>
                     <Check className="w-4 h-4 text-white" />
                   </div>
                 )}
@@ -235,9 +235,9 @@ const PaymentModal = ({ product, onSuccess, onFailure, onClose }) => {
           </div>
 
           {/* Instructions */}
-          <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+          <div className="mb-6 p-4 bg-linear-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
             <div className="flex items-start">
-              <AlertCircle className="w-5 h-5 text-blue-600 mr-3 flex-shrink-0" />
+              <AlertCircle className="w-5 h-5 text-blue-600 mr-3 shrink-0" />
               <div>
                 <p className="text-sm text-gray-700">
                   <span className="font-semibold">How to test:</span> Click any payment method to see its specific interface and simulate the payment flow.

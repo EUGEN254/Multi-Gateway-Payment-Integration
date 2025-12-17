@@ -71,7 +71,7 @@ const PayPalPayment = ({ product, onSuccess, onFailure, onClose }) => {
         </div>
 
         {/* Product Info */}
-        <div className="p-6 bg-gradient-to-r from-blue-50 to-cyan-50">
+        <div className="p-6 bg-linear-to-r from-blue-50 to-cyan-50">
           <div className="flex justify-between items-center">
             <span className="font-semibold">{product.name}</span>
             <span className="text-xl font-bold">${product.price}</span>
@@ -96,7 +96,7 @@ const PayPalPayment = ({ product, onSuccess, onFailure, onClose }) => {
                 <button
                   type="button"
                   onClick={() => setUseSandbox(!useSandbox)}
-                  className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
                   style={{
                     backgroundColor: useSandbox ? "#3B82F6" : "#9CA3AF",
                   }}
@@ -119,7 +119,7 @@ const PayPalPayment = ({ product, onSuccess, onFailure, onClose }) => {
             <button
               onClick={handleSubmit}
               disabled={isProcessing}
-              className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-700 disabled:opacity-50 flex items-center justify-center"
+              className="w-full bg-linear-to-r from-blue-600 to-cyan-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-700 disabled:opacity-50 flex items-center justify-center"
             >
               {isProcessing ? (
                 <>

@@ -1,34 +1,35 @@
 Multi-Gateway Payment Integration
 
-This project demonstrates integration of multiple payment gateways (Stripe and PayPal) in a React + Express application. It is fully sandboxed/test-only, meaning no real money transactions are processed.
+    This project demonstrates integration of multiple payment gateways (Stripe and PayPal) in a React + Express application.
+    It is fully sandboxed/test-only, meaning no real money transactions are processed.
 
 Table of Contents
 
+    Technologies
+
+    Setup
+
+    Environment Variables
+
+    Running the Project
+
+    Usage
+
+    Testing Payments
+
+    Folder Structure
+
 Technologies
+
+    Frontend: React, TailwindCSS, Lucide Icons, Axios
+
+    Backend: Node.js, Express, Stripe, PayPal SDK, dotenv
+
+    Testing: Stripe sandbox, PayPal sandbox
 
 Setup
 
-Environment Variables
-
-Running the Project
-
-Usage
-
-Testing Payments
-
-Folder Structure
-
-Technologies
-
-Frontend: React, TailwindCSS, Lucide Icons, Axios
-
-Backend: Node.js, Express, Stripe, PayPal SDK, dotenv
-
-Testing: Stripe sandbox, PayPal sandbox
-
-Setup
-
-Clone the repo:
+Clone the repository:
 
 git clone <repo-url>
 cd multi-gateway-payments
@@ -45,9 +46,7 @@ cd ../frontend
 npm install
 
 Environment Variables
-
-Create a .env file in the backend folder:
-
+Backend .env
 PORT=5000
 
 # Stripe
@@ -57,31 +56,29 @@ STRIPE_SECRET_KEY=sk_test_...
 PAYPAL_CLIENT_ID=YOUR_PAYPAL_SANDBOX_CLIENT_ID
 PAYPAL_CLIENT_SECRET=YOUR_PAYPAL_SANDBOX_CLIENT_SECRET
 
-
-Create a .env file in the frontend folder:
-
+Frontend .env
 VITE_BACKEND_URL=http://localhost:5000
 VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
 VITE_PAYPAL_CLIENT_ID=YOUR_PAYPAL_SANDBOX_CLIENT_ID
 
 Running the Project
-Backend:
+Backend
 cd backend
 npm run dev
 
 
-Server should run at http://localhost:5000.
+Server will run at: http://localhost:5000
 
-Frontend:
+Frontend
 cd frontend
 npm run dev
 
 
-Frontend should run at http://localhost:5173.
+Frontend will run at: http://localhost:5173
 
 Usage
 
-Open the frontend in the browser.
+Open the frontend in your browser.
 
 Select a product and choose a payment method (Stripe or PayPal).
 
@@ -91,7 +88,7 @@ Click Pay to simulate the payment flow.
 
 Testing Payments
 
-Stripe: Sandbox payments work with any valid card (e.g., 4242 4242 4242 4242)
+Stripe: Sandbox payments work with any valid card, e.g., 4242 4242 4242 4242
 
 PayPal: Use sandbox accounts:
 
@@ -99,7 +96,7 @@ Email: sb-xxxx@personal.example.com
 Password: 12345678
 
 
-All PayPal captures are simulated in backend; no real transaction occurs.
+⚠️ All PayPal captures are simulated in the backend; no real transactions occur.
 
 Folder Structure
 multi-gateway-payments/
@@ -117,4 +114,5 @@ multi-gateway-payments/
 └─ README.md
 
 
-This README is sandbox/test-focused. When moving to production, update the PayPal environment, Stripe keys, and remove any simulated logic.
+This README is sandbox/test-focused.
+When moving to production, update the PayPal environment, Stripe keys, and remove any simulated logic.

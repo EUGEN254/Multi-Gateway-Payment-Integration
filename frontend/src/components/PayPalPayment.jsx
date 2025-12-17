@@ -7,40 +7,43 @@ const PayPalPayment = ({ product, onSuccess, onFailure, onClose }) => {
   const [useSandbox, setUseSandbox] = useState(true);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsProcessing(true);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsProcessing(true);
 
-    try {
-      // 1️⃣ Create simulated order
-      const createRes = await axios.post(
-        `${backendUrl}/api/paypal/create-order`,
-        { amount: product.price, currency: "USD" },
-        { withCredentials: true }
-      );
+  try {
+    // Create a simulated PayPal order
+    const createRes = await axios.post(
+      `${backendUrl}/api/paypal/create-order`,
+      { amount: product.price, currency: "USD" },
+      { withCredentials: true }
+    );
 
-      const orderID = createRes.data.id;
-      if (!orderID) throw new Error("Failed to create simulated PayPal order");
+    const orderID = createRes.data.id;
+    if (!orderID) throw new Error("Failed to create simulated PayPal order");
 
-      // 2️⃣ Capture simulated order
-      const captureRes = await axios.post(
-        `${backendUrl}/api/paypal/capture-order`,
-        { orderID },
-        { withCredentials: true }
-      );
+    // Capture the order (simulated)
+    const captureRes = await axios.post(
+      `${backendUrl}/api/paypal/capture-order`,
+      { orderID },
+      { withCredentials: true }
+    );
 
-      if (captureRes.data && captureRes.data.capture) {
-        onSuccess("PayPal", captureRes.data.capture);
-      } else {
-        onFailure("PayPal");
-      }
-    } catch (err) {
-      console.error("PayPal payment error:", err);
+    // Check the response (simulated capture)
+    if (captureRes.data && captureRes.data.status === "COMPLETED") {
+      onSuccess("PayPal", captureRes.data); // Pass capture info to success callback
+    } else {
       onFailure("PayPal");
-    } finally {
-      setIsProcessing(false);
     }
-  };
+
+  } catch (err) {
+    console.error("PayPal payment error:", err);
+    onFailure("PayPal");
+  } finally {
+    setIsProcessing(false);
+  }
+};
+
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4">

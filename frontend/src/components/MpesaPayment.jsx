@@ -21,7 +21,7 @@ const MpesaPayment = ({ product, onSuccess, onFailure, onBack, onClose }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-fadeIn">
+    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-y-scroll max-h-[90vh] animate-fadeIn">
       {/* Header with Back Button */}
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-center justify-between">

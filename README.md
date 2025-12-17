@@ -23,31 +23,33 @@ Technologies
 
     Frontend: React, TailwindCSS, Lucide Icons, Axios
 
-    Backend: Node.js, Express, Stripe, PayPal SDK, dotenv
+    Backend: Node.js, Express, Stripe, PayPal SDK, dotenv, Mongoose
 
-    Testing: Stripe sandbox, PayPal sandbox
+Testing: Stripe sandbox, PayPal sandbox
 
 Setup
 
-Clone the repository:
+    Clone the repository:
 
 git clone <repo-url>
-cd multi-gateway-payments
+    cd multi-gateway-payments
 
 
 Install dependencies:
 
 # Backend
-cd backend
-npm install
+    cd backend
+    npm install
 
 # Frontend
-cd ../frontend
-npm install
+    cd ../frontend
+    npm install
 
-Environment Variables
-Backend .env
-PORT=5000
+    Environment Variables
+
+    Create a .env file in the backend folder:
+
+    PORT=5000
 
 # Stripe
     STRIPE_SECRET_KEY=sk_test_...
@@ -57,20 +59,27 @@ PORT=5000
     PAYPAL_CLIENT_SECRET=YOUR_PAYPAL_SANDBOX_CLIENT_SECRET
 
 
-# Frontend .env
+Create a .env file in the frontend folder:
+
     VITE_BACKEND_URL=http://localhost:5000
     VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
     VITE_PAYPAL_CLIENT_ID=YOUR_PAYPAL_SANDBOX_CLIENT_ID
 
+
+Replace the keys with your own Stripe and PayPal sandbox credentials.
+
 Running the Project
-    Backend
-    cd backend
-    npm run dev
+
+Backend:
+
+cd backend
+    npm run server   # or npm start
 
 
 Server will run at: http://localhost:5000
 
-Frontend
+Frontend:
+
     cd frontend
     npm run dev
 
@@ -83,39 +92,58 @@ Usage
 
     Select a product and choose a payment method (Stripe or PayPal).
 
-    For PayPal, sandbox mode is enabled; you can toggle between sandbox and live.
+    For PayPal, sandbox mode is enabled; you can toggle between sandbox and live in your code.
 
     Click Pay to simulate the payment flow.
 
 Testing Payments
 
-    Stripe: Sandbox payments work with any valid card, e.g., 4242 4242 4242 4242
+    Stripe: Sandbox payments work with any valid card, e.g., 4242 4242 4242 4242.
 
-    PayPal: Use sandbox accounts:
-
-
-
+    PayPal: Use sandbox accounts (found in your PayPal developer dashboard).
 
 ⚠️ All PayPal captures are simulated in the backend; no real transactions occur.
 
     Folder Structure
-    multi-gateway-payments
-    ├── backend
+    multi-gateway-payments/
+    ├── backend/
     │   ├── package.json
     │   ├── package-lock.json
     │   └── server.js
-    ├── frontend
+    ├── frontend/
     │   ├── eslint.config.js
     │   ├── index.html
     │   ├── package.json
     │   ├── package-lock.json
-    │   ├── public
+    │   ├── public/
+    │   │   └── vite.svg
     │   ├── README.md
-    │   ├── src
+    │   ├── src/
+    │   │   ├── App.jsx
+    │   │   ├── assets/
+    │   │   │   └── react.svg
+    │   │   ├── components/
+    │   │   │   ├── FlutterwavePayment.jsx
+    │   │   │   ├── MpesaPayment.jsx
+    │   │   │   ├── PayPalPayment.jsx
+    │   │   │   ├── PaystackPayment.jsx
+    │   │   │   └── StripePayment.jsx
+    │   │   ├── index.css
+    │   │   ├── main.jsx
+    │   │   └── pages/
+    │   │       ├── PaymentModal.jsx
+    │   │       └── ProductsPage.jsx
     │   └── vite.config.js
     └── README.md
 
+Notes
 
+    This README is sandbox/test-focused.
 
-This README is sandbox/test-focused.
-When moving to production, update the PayPal environment, Stripe keys, and remove any simulated logic.
+    When moving to production:
+
+    Replace PayPal sandbox keys with live credentials.
+
+    Replace Stripe test keys with live keys.
+
+    Remove any simulated logic in the backend.

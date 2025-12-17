@@ -50,68 +50,68 @@ Backend .env
 PORT=5000
 
 # Stripe
-STRIPE_SECRET_KEY=sk_test_...
+    STRIPE_SECRET_KEY=sk_test_...
 
 # PayPal Sandbox
-PAYPAL_CLIENT_ID=YOUR_PAYPAL_SANDBOX_CLIENT_ID
-PAYPAL_CLIENT_SECRET=YOUR_PAYPAL_SANDBOX_CLIENT_SECRET
+    PAYPAL_CLIENT_ID=YOUR_PAYPAL_SANDBOX_CLIENT_ID
+    PAYPAL_CLIENT_SECRET=YOUR_PAYPAL_SANDBOX_CLIENT_SECRET
 
-Frontend .env
-VITE_BACKEND_URL=http://localhost:5000
-VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
-VITE_PAYPAL_CLIENT_ID=YOUR_PAYPAL_SANDBOX_CLIENT_ID
+
+# Frontend .env
+    VITE_BACKEND_URL=http://localhost:5000
+    VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
+    VITE_PAYPAL_CLIENT_ID=YOUR_PAYPAL_SANDBOX_CLIENT_ID
 
 Running the Project
-Backend
-cd backend
-npm run dev
+    Backend
+    cd backend
+    npm run dev
 
 
 Server will run at: http://localhost:5000
 
 Frontend
-cd frontend
-npm run dev
+    cd frontend
+    npm run dev
 
 
 Frontend will run at: http://localhost:5173
 
 Usage
 
-Open the frontend in your browser.
+    Open the frontend in your browser.
 
-Select a product and choose a payment method (Stripe or PayPal).
+    Select a product and choose a payment method (Stripe or PayPal).
 
-For PayPal, sandbox mode is enabled; you can toggle between sandbox and live.
+    For PayPal, sandbox mode is enabled; you can toggle between sandbox and live.
 
-Click Pay to simulate the payment flow.
+    Click Pay to simulate the payment flow.
 
 Testing Payments
 
-Stripe: Sandbox payments work with any valid card, e.g., 4242 4242 4242 4242
+    Stripe: Sandbox payments work with any valid card, e.g., 4242 4242 4242 4242
 
-PayPal: Use sandbox accounts:
+    PayPal: Use sandbox accounts:
 
-Email: sb-xxxx@personal.example.com
-Password: 12345678
+
 
 
 ⚠️ All PayPal captures are simulated in the backend; no real transactions occur.
 
 Folder Structure
-multi-gateway-payments/
-├─ backend/
-│  ├─ server.js
-│  ├─ package.json
-│  └─ .env
-├─ frontend/
-│  ├─ src/
-│  │  ├─ App.jsx
-│  │  ├─ PayPalPayment.jsx
-│  │  └─ ...
-│  ├─ package.json
-│  └─ .env
-└─ README.md
+    multi-gateway-payments/
+    ├─ backend/
+    │  ├─ server.js
+    │  ├─ package.json
+    │  └─ .env
+    ├─ frontend/
+    │  ├─ src/
+    │  │  ├─ App.jsx
+    │  │  ├─ PayPalPayment.jsx
+    │  │  └─ ...
+    │  ├─ package.json
+    │  └─ .env
+    └─ README.md
 
 
 This README is sandbox/test-focused.
